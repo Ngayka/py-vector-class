@@ -3,8 +3,8 @@ import math
 
 class Vector:
     def __init__(self, x=0, y=0):
-        self.x = x
-        self.y = y
+        self.x = round(x, 2)
+        self.y = round(y, 2)
 
     @property
     def coordinates(self):
@@ -37,33 +37,33 @@ class Vector:
         if isinstance(other, (int, float)):
             new_x = self.x * other
             new_y = self.y * other
+            result = Vector(new_x, new_y)
 
         elif isinstance(other, Vector):
             new_x = self.x * other.x
             new_y = self.y * other.y
+            result = new_x + new_y
         else:
             return NotImplemented
-        result = Vector(new_x, new_y)
+
         return result
 
     @classmethod
     def create_vector_by_two_points(cls, start_point, end_point):
-        if isinstance(start_point, cls) and isinstance(end_point, cls):
-            vector_x = round(end_point.x - start_point.x, 2)
-            vector_y = round(end_point.y - start_point.y, 2)
-        else:
-            return NotImplemented
+        vector_x = end_point[0] - start_point[0]
+        vector_y = end_point[1] - start_point[1]
+
         return cls(vector_x, vector_y)
 
     def get_length(self):
-        return round(math.sqrt(self.x**2 + self.y**2), 2)
+        return math.sqrt(self.x**2 + self.y**2)
 
     def get_normalized(self):
         length = self.get_length()
         if length == 0:
             return Vector(0, 0)
         else:
-            return Vector(round(self.x / length, 2), round(self.y / length, 2))
+            return Vector(self.x / length, self.y / length)
 
     def angle_between(self, other):
         self_len = self.get_length()
