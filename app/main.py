@@ -2,18 +2,18 @@ import math
 
 
 class Vector:
-    def __init__(self, x=0, y=0):
+    def __init__(self, x=0, y=0) -> None:
         self.x = round(x, 2)
         self.y = round(y, 2)
 
     @property
-    def coordinates(self):
+    def coordinates(self) -> tuple:
         return (self.x, self.y)
 
     def __str__(self):
         return str(self.coordinates)
 
-    def __add__(self, other):
+    def __add__(self, other) -> "Vector":
         if isinstance(other, Vector):
             new_x = self.x + other.x
             new_y = self.y + other.y
@@ -23,7 +23,7 @@ class Vector:
         result = Vector(new_x, new_y)
         return result
 
-    def __sub__(self, other):
+    def __sub__(self, other) -> "Vector":
         if isinstance(other, Vector):
             new_x = self.x - other.x
             new_y = self.y - other.y
@@ -33,7 +33,7 @@ class Vector:
         result = Vector(new_x, new_y)
         return result
 
-    def __mul__(self, other):
+    def __mul__(self, other) -> "Vector":
         if isinstance(other, (int, float)):
             new_x = self.x * other
             new_y = self.y * other
@@ -49,7 +49,7 @@ class Vector:
         return result
 
     @classmethod
-    def create_vector_by_two_points(cls, start_point, end_point):
+    def create_vector_by_two_points(cls, start_point: tuple, end_point: tuple) -> "Vector":
         vector_x = end_point[0] - start_point[0]
         vector_y = end_point[1] - start_point[1]
 
@@ -58,14 +58,14 @@ class Vector:
     def get_length(self):
         return math.sqrt(self.x**2 + self.y**2)
 
-    def get_normalized(self):
+    def get_normalized(self) -> "Vector":
         length = self.get_length()
         if length == 0:
             return Vector(0, 0)
         else:
             return Vector(self.x / length, self.y / length)
 
-    def angle_between(self, other):
+    def angle_between(self, other) -> float:
         self_len = self.get_length()
         if not isinstance(other, Vector):
             return NotImplemented
@@ -79,7 +79,7 @@ class Vector:
         angle_rad = math.acos(cos_a)
         return math.ceil(math.degrees(angle_rad))
 
-    def get_angle(self):
+    def get_angle(self) -> int:
         if self.x == 0 and self.y == 0:
             return 0
         length = self.get_length()
@@ -88,7 +88,7 @@ class Vector:
 
         return int(angle)
 
-    def rotate(self, degrees):
+    def rotate(self, degrees: int) -> "Vector":
         radians = math.radians(degrees)
 
         cos_a = math.cos(radians)
